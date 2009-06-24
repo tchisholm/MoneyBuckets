@@ -1,0 +1,48 @@
+<p>
+  <b>Account:</b>
+  <%=h @transaction.account_id %>
+</p>
+
+<p>
+  <b>Tran date:</b>
+  <%=h @transaction.tran_date %>
+</p>
+
+<p>
+  <b>Created at:</b>
+  <%=h @transaction.created_at %>
+</p>
+
+<p>
+  <b>Doc number:</b>
+  <%=h @transaction.doc_number %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @transaction.description %>
+</p>
+
+<p>
+  <b>Damount:</b>
+  <%=h @transaction.damount %>
+</p>
+
+<p>
+  <b>Wamount:</b>
+  <%=h @transaction.wamount %>
+</p>
+
+<p>
+  <b>Reconciled:</b>
+  <%=h @transaction.reconciled %>
+</p>
+
+<p>
+  <b>Posted:</b>
+  <%=h @transaction.posted %>
+</p>
+
+
+<%= link_to 'Edit', edit_transaction_path(@transaction) %> |
+<%= link_to 'Back', transactions_path %>

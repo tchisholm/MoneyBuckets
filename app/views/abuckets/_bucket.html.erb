@@ -1,0 +1,23 @@
+<tr class="<%= cycle('list-line-odd', 'list-line-even') %>">
+  <td class="name"><%=h bucket.name %></td>
+  <% balance = bucket.get_bucket_balance(@account) %>
+  <% if balance != 0 %>
+    <td class="currency"><%=h number_to_currency(balance)  %></td>
+  <% else %>
+    <td class="currency">&nbsp</td>
+  <% end %>
+  <td class="icon"><%= link_to image_tag("/images/edit.gif", :border => "0", :size => "20x20", :alt => "Edit"), 
+    edit_account_abucket_path(@account, bucket) %></td>
+  <% if Rbucket.find_all_by_abucket_id(bucket.id).size < 1 and Tbucket.find_all_by_abucket_id(bucket.id).size < 1 %>
+    <td class="icon"><%= link_to image_tag("/images/delete.gif", :border => "0", :size => "20x20", :alt => "Delete"), 
+      [@account, bucket], :confirm => 'Are you sure you want to delete this bucket?', :method => :delete %></td>
+  <% else %>
+      <td class="icon">&nbsp</td>
+  <% end %>
+  <% if Tbucket.find_all_by_abucket_id(bucket.id).size > 0 %>
+    <td class="icon"><%= link_to image_tag("/images/detail.gif", :border => "0", :size => "20x20", :alt => "Transaction Detail Report"), 
+      transaction_detail_report_abucket_path(bucket) %></td>
+  <% else %>
+    <td class="icon">&nbsp</td>
+  <% end %>
+</tr>

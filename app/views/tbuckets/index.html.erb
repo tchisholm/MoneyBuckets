@@ -1,0 +1,61 @@
+<div id="main">
+  <div id="tab5">
+
+    <br/>
+    <%= link_to image_tag("/images/back.gif", :border => "0", :size => "30x30", :alt => "Back to Transaction List"), 
+      account_transactions_path(@account) %>&nbsp
+    <% if @wremaining != 0 or @dremaining != 0 %>
+      <% if !@transaction.reconciled %>
+        <%= link_to image_tag("/images/new.gif", :border => "0", :size => "30x30", :alt => "New Transaction Bucket"), 
+          new_transaction_tbucket_path(@transaction) %>&nbsp
+      <% end %>
+    <% end %>
+    <%= render :partial => '/helppages/help_button_link' %>
+
+    <div class="body">
+      
+      <h3><span style="margin-left:37px">Account:</span> 
+            <span class="head1"><%=h @account.name %></span><br/>
+            Transaction: <span class="head2"><%=h @transaction.description %> on 
+            <%=h @transaction.tran_date.strftime("%m-%d-%Y") %></span></h3>
+      <h2>Transaction Bucket List</h2>
+
+      <div style="width:683px;color:gold;padding-bottom:3px">
+        <% if @wremaining != 0 %>
+          Remaining Withdrawal: <%= number_to_currency(@wremaining) %>&nbsp&nbsp&nbsp&nbsp&nbsp
+        <% else %>
+          &nbsp
+        <% end %>
+        <% if @dremaining != 0 %>
+          Remaining Deposit: <%= number_to_currency(@dremaining) %>
+        <% else %>
+          &nbsp
+        <% end %>
+      </div>
+      
+      <% if @tbuckets.count > 0 %>
+        <div class="list2" style="width:651px">
+          <table class="list" border="1" cellpadding="3">
+            <tr class="header">
+              <th class="name">Bucket Name</th>
+              <th class="currency">Withdrawal</th>
+              <th class="currency">Deposit</th>
+              <% if !@transaction.reconciled %>
+                <th colspan="2" width="50px">Action</th>
+              <% end %>
+            </tr>
+          </table>
+        </div>
+        <div class="list2" style="width:651px">
+          <table class="list" border="1" cellpadding="3">
+            <%= render :partial => 'tbucket', :collection => @tbuckets %>
+          </table>
+        </div>
+      <% else %>
+        <p>No allocations buckets have been set up yet.</p>
+      <% end %>
+
+    </div>
+  
+  </div>
+</div>

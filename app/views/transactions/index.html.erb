@@ -1,0 +1,51 @@
+<div id="main">
+  <div id="tab4">
+
+    <br/>
+    <%= link_to image_tag("/images/back.gif", :border => "0", :size => "30x30", :alt => "Back to Account List"), 
+      user_accounts_path(current_user) %>&nbsp
+    <%= link_to image_tag("/images/new.gif", :border => "0", :size => "30x30", :alt => "New Transaction"), 
+      new_account_transaction_path(@account) %>&nbsp
+    <%= render :partial => '/helppages/help_button_link' %>
+
+    <div class="body">
+      
+      <h3>Account: <span class="head1"><%=h @account.name %></span></h3>
+      <h2>Transaction List</h2>
+
+      <div style="width:683px;color:gold;padding-bottom:3px">
+        <% rbalance = @account.get_reconciled_balance %>
+        Reconciled Balance: <%= number_to_currency(rbalance) %>
+      </div>
+      
+     <% if @transactions.size > 1 %>
+        <div class="list2" style="width:940px">
+          <table class="list" border="1" cellpadding="3">
+            <tr class="header">
+              <th class="date">Date</th>
+              <th class="type">#</th>
+              <th class="name">Description</th>
+              <th class="currency">Withdrawal</th>
+              <th class="currency">Deposit</th>
+              <th class="currency">Remaining</th>
+              <th class="icon">
+                <img src="/images/check_head.png" width="15" height="15">
+              </th>
+              <th colspan="4" width="110px">Action</th>
+            </tr>
+          </table>
+        </div>
+        <div class="list2" style="width:940px">
+          <table class="list" border="1" cellpadding="3">
+            <%= render :partial => 'transaction', :collection => @transactions %>
+          </table>
+        </div>
+        <br />
+      <% else %>
+        <p>No transactions have been entered yet.</p>
+      <% end %>
+
+    </div>
+  
+  </div>
+</div>

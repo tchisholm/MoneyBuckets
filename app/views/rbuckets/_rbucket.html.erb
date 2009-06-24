@@ -1,0 +1,22 @@
+<tr class="<%= cycle('list-line-odd', 'list-line-even') %>">
+  <td class="name"><%=h @account.abuckets.find(rbucket.abucket_id).name %></td>
+  <td class="currency"><%=h number_to_currency(rbucket.amount) %></td>
+  <% if @recurring.transaction_type == "Deposit" and @recurring.monthly == true %>
+    <% budget = @recurring.budget_amount(@account, rbucket.abucket_id) %>
+    <% if budget != 0 %>
+      <td class="currency"><%=h number_to_currency(budget) %></td>
+    <% else %>
+      <td class="currency">&nbsp</td>
+    <% end %>
+    <% remaining = @recurring.remaining_amount(@account,rbucket.abucket_id) %>
+    <% if remaining != 0 %>
+      <td class="currency"><%=h number_to_currency(remaining) %></td>
+    <% else %>
+      <td class="currency">&nbsp</td>
+    <% end %>
+  <% end %>
+  <td class="icon"><%= link_to image_tag("/images/edit.gif", :border => "0", :size => "20x20", :alt => "Edit"), 
+    edit_recurring_rbucket_path(@recurring, rbucket) %></td>
+  <td class="icon"><%= link_to image_tag("/images/delete.gif", :border => "0", :size => "20x20", :alt => "Delete"), 
+    [@recurring, rbucket], :confirm => 'Are you sure you want to delete this recurring allocation bucket?', :method => :delete %></td>
+</tr>

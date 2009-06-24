@@ -1,0 +1,41 @@
+<% b = transaction.tbuckets.find_by_abucket_id(@abucket.id) %>
+<% if b %>
+  <% @balance = b.update_balance(@balance) %>
+  <% if transaction.description == 'Balance Forward' %>
+    <tr style="color:black;background-color:gold">
+      <th class="date">&nbsp</th>
+      <th class="type">&nbsp</th>
+      <th class="name">Balance Forward</th>
+      <th class="currency">&nbsp</th>
+      <th class="currency">&nbsp</th>
+      <th class="icon">&nbsp</th>
+      <th class="currency"><%=h number_to_currency(@balance) %></th>
+    </tr>
+  <% else %>
+    <tr class="<%= cycle('list-line-odd', 'list-line-even') %>">
+      <td class="date"><%=h transaction.tran_date.strftime("%m-%d-%Y") %></td>
+      <% if transaction.doc_number != nil and transaction.doc_number != '' %>
+        <td class="type"><%=h transaction.doc_number %></td>
+      <% else %>
+        <td class="type">&nbsp</td>
+      <% end %>
+      <td class="name"><%=h transaction.description %></td>
+      <% if b.wamount != 0 and b.wamount != nil %>
+        <td class="currency"><%= number_to_currency(b.wamount) %></td>
+      <% else %>
+        <td class="currency">&nbsp</th>
+      <% end %>
+      <% if b.damount != 0 and b.damount != nil %>
+        <td class="currency"><%= number_to_currency(b.damount) %></td>
+      <% else %>
+        <td class="currency">&nbsp</td>
+      <% end %>
+      <% if transaction.reconciled %>
+        <td class="icon"><img src="/images/check.png" width="15" height="15"></td>
+      <% else %>
+        <td class="icon">&nbsp</td>
+      <% end %>
+      <td class="currency"><%= number_to_currency(@balance) %></td>
+    </tr>
+  <% end %>
+<% end %>

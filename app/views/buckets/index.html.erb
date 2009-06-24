@@ -1,0 +1,35 @@
+<div id="main">
+  <div id="tab2">
+    
+    <br/>
+    <%= link_to image_tag("/images/new.gif", :border => "0", :size => "30x30", :alt => "New General Bucket"), 
+      new_user_bucket_path(current_user) %>&nbsp
+    <%= render :partial => '/helppages/help_button_link' %>
+    
+    <div class="body">
+      
+      <h2>General Bucket List</h2>
+
+      <% if current_user.buckets.count > 0 %>
+        <div class="list" style="width:341px">
+          <table class="list" border="1" cellpadding="3">
+            <tr class="header">
+              <th class="name">Bucket Name</th>
+              <th colspan="2" width="50px">Action</th>
+            </tr>
+          </table>
+        </div>
+        <div class="list" style="width:341px">
+          <table class="list" border="1" cellpadding="3">
+            <%= render :partial => 'bucket', :collection => @buckets %>
+          </table>
+        </div>
+        <br />
+      <% else %>
+        <p>No buckets have been set up yet.</p>
+      <% end %>
+
+    </div>
+  
+  </div>
+</div>

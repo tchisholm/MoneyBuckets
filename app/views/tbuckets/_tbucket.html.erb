@@ -1,0 +1,20 @@
+<tr class="<%= cycle('list-line-odd', 'list-line-even') %>">
+  <td class="name"><%=h @account.abuckets.find(tbucket.abucket_id).name %></td>
+  <% if tbucket.wamount != 0 and tbucket.wamount != nil %>
+    <td class="currency"><%=h number_to_currency(tbucket.wamount) %></td>
+  <% else %>
+    <td class="currency">&nbsp</td>
+  <% end %>
+  <% if tbucket.damount != 0 and tbucket.damount != nil %>
+    <td class="currency"><%=h number_to_currency(tbucket.damount) %></td>
+  <% else %>
+    <td class="currency">&nbsp</td>
+  <% end %>
+  <% if !@transaction.reconciled %>
+    <td class="icon"><%= link_to image_tag("/images/edit.gif", :border => "0", :size => "20x20", :alt => "Edit"), 
+      edit_transaction_tbucket_path(@transaction, tbucket) %></td>
+    <td class="icon"><%= link_to image_tag("/images/delete.gif", :border => "0", :size => "20x20", :alt => "Delete"), 
+      [@transaction, tbucket], :confirm => 'Are you sure you want to delete this transaction allocation bucket?', 
+      :method => :delete %></td>
+  <% end %>
+</tr>

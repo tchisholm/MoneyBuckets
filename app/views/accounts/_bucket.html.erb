@@ -1,0 +1,22 @@
+<tr class="<%= cycle('list-line-odd', 'list-line-even') %>">
+  <td class="name"><%=h @account.abuckets.find(bucket.abucket_id).name %></td>
+  <% if bucket.amount != 0 %>
+    <td class="currency"><%=h number_to_currency(bucket.amount) %></td>
+  <% else %>
+    <td class="currency">&nbsp</td>
+  <% end %>
+  <% for deposit in @deposits %>
+    <% if deposit.monthly %>
+      <td class="currency">
+    <% else %>
+      <td class="currency" style="color:gray">
+    <% end %>
+      <% amount = @account.get_deposit_amount(deposit, bucket.abucket_id) %>
+      <% if amount != 0 %>
+        <%=h number_to_currency(amount) %>
+      <% else %>
+        &nbsp
+      <% end %>
+    </td>
+  <% end %>
+</tr>

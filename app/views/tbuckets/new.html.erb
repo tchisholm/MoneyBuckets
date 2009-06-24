@@ -1,0 +1,84 @@
+<div id="main">
+  <div id="tab5">
+
+    <br/>
+    <%= link_to image_tag("/images/back.gif", :border => "0", :size => "30x30", :alt => "Back to Transaction Bucket List"), 
+      transaction_tbuckets_path(@transaction) %>&nbsp
+    <%= render :partial => '/helppages/help_button_link' %>
+
+    <div class="body">
+      
+      <h3><span style="margin-left:37px">Account:</span> 
+            <span class="head1"><%=h @account.name %></span><br/>
+            Transaction: <span class="head2"><%=h @transaction.description %> on 
+            <%=h @transaction.tran_date.strftime("%m-%d-%Y") %></span></h3>
+      <h2>New Transaction Bucket</h2>
+        
+      <div id="left">
+
+        <%= error_messages_for :tbucket %>
+
+        <fieldset>
+
+          <% form_for([@transaction, @tbucket]) do |f| %>
+            <p>
+              <b>Bucket Name:</b><br />
+              <%= f.select :abucket_id, @ubuckets.map {|u| [u.name, u.id] } %>
+            </p>
+            <% if @transaction.wamount != 0 and @transaction.wamount != nil %>
+              <p>
+                <b>Withdrawal Amount:</b><br />
+                <%= f.text_field :wamount, :size => 12, :value => @wremaining %>
+              </p>
+            <% end %>
+            <% if @transaction.damount != 0 and @transaction.damount != nil %>
+              <p>
+                <b>Deposit Amount:</b><br />
+                <%= f.text_field :damount, :size => 12, :value => @dremaining %>
+              </p>
+            <% end %>
+            <p>
+              <%= f.submit 'Create' %>
+            </p>
+          <% end %>
+          
+          <script language="JavaScript"> document.forms[0].tbucket_abucket_id.select(); </script>
+          <script language="JavaScript"> document.forms[0].tbucket_abucket_id.focus(); </script>
+        
+        </fieldset>
+        
+        <div style="color:gold">
+          <% if @wremaining != 0 %>
+            Withdrawal Remaining: <%= number_to_currency(@wremaining) %><br/>
+          <% end %>
+          <% if @dremaining != 0 %>
+            Deposit Remaining: <%= number_to_currency(@dremaining) %><br/>
+          <% end %>
+        </div>
+        
+      </div>
+
+      <div id="right">
+        <% if @bbuckets.size > 0 %>
+          <div class="list2">
+            <table class="list" border="1" cellpadding="3">
+              <tr class="header">
+                <th class="name">Bucket Name</th>
+                <th class="currency">Balance</th>
+              </tr>
+            </table>
+          </div>
+          <div class="list2">
+            <table class="list" border="1" cellpadding="3">
+              <%= render :partial => 'budget_bucket', :collection => @bbuckets %>
+            </table>
+          </div>
+        <% else %>
+          <p>Budget has no allocated buckets.</p>
+        <% end %>
+      </div>
+
+    </div>
+  
+  </div>
+</div>

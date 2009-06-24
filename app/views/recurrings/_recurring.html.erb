@@ -1,0 +1,34 @@
+<tr class="<%= cycle('list-line-odd', 'list-line-even') %>">
+  <td class="name"><%=h recurring.name %></td>
+  <% if recurring.transaction_type == 'Budget' %>
+    <td class="type">B</th>
+  <% else %>
+    <% if recurring.transaction_type == 'Deposit' %>
+      <td class="type">D</th>
+    <% else %>
+      <td class="type">W</th>
+    <% end %>
+  <% end %>
+  <td class="currency"><%=h number_to_currency(recurring.amount) %></th>
+  <% remaining = recurring.amount - recurring.sum_allocation_buckets %>
+  <% if remaining > 0 %>
+    <td class="currency"><%= number_to_currency(remaining) %></th>
+  <% else %>
+    <td class="currency">&nbsp</th>
+  <% end %>
+  <% if recurring.monthly %>
+    <td class="type">Yes</th>
+  <% else %>
+    <td class="type">No</th>
+  <% end %>
+  <td class="icon"><%= link_to image_tag("/images/edit.gif", :border => "0", :size => "20x20", :alt => "Edit"), 
+    edit_account_recurring_path(@account, recurring) %></td>
+  <% if recurring.transaction_type != "Budget" and recurring.rbuckets.count == 0 %>
+    <td class="icon"><%= link_to image_tag("/images/delete.gif", :border => "0", :size => "20x20", :alt => "Delete"), 
+      [@account, recurring], :confirm => 'Are you sure you want to delete this recurring transaction?', :method => :delete %></td>
+  <% else %>
+    <td class="icon">&nbsp</td>
+  <% end %>
+  <td class="icon"><%= link_to image_tag("/images/bucket.gif", :border => "0", :size => "20x20", :alt => "Bucket Allocation"), 
+    recurring_rbuckets_path(recurring) %></td>
+</tr>

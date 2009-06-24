@@ -1,0 +1,41 @@
+<tr class="<%= cycle('list-line-odd', 'list-line-even') %>">
+  <td class="name"><%=h account.name  %></td>
+  <% if account.get_account_balance != 0 %>
+    <td class="currency"><%=h number_to_currency(account.get_account_balance)  %></td>
+  <% else %>
+    <td class="currency">&nbsp</td>
+  <% end %>
+  <td class="icon"><%= link_to image_tag("/images/transaction.png", :border => "0", :size => "20x20", :alt => "Transactions"), 
+    account_transactions_path(account) %></td>
+  <td class="icon"><%= link_to image_tag("/images/edit.gif", :border => "0", :size => "20x20", :alt => "Edit"), 
+    edit_user_account_path(current_user, account) %></td>
+  <% if account.abuckets.count == 0 and account.recurrings.count <= 1 and account.transactions.count <= 1 %>
+    <td class="icon"><%= link_to image_tag("/images/delete.gif", :border => "0", :size => "20x20", :alt => "Delete"), 
+      [current_user, account], :confirm => 'Are you sure you want to delete this account?', :method => :delete %></td>
+  <% else %>
+    <td class="icon">&nbsp</td>
+  <% end %>
+  <td class="icon"><%= link_to image_tag("/images/bucket.gif", :border => "0", :size => "20x20", :alt => "Buckets"), 
+    account_abuckets_path(account) %></td>
+  <td class="icon"><%= link_to image_tag("/images/recurring.png", :border => "0", :size => "20x20", :alt => "Recurring Transactions"), 
+    account_recurrings_path(account) %></td>
+  <td class="icon"><%= link_to image_tag("/images/budget.png", :border => "0", :size => "20x20", :alt => "Budget Report"), 
+    budget_report_account_path(account) %></td>
+  <td class="icon"><%= link_to image_tag("/images/detail.gif", :border => "0", :size => "20x20", :alt => "Transaction Detail Report"), 
+    transaction_detail_report_account_path(account) %></td>
+  <% if account.transactions.find_all_by_reconciled(true).size > 0 %>
+    <td class="icon"><%= link_to image_tag("/images/archive.gif", :border => "0", :size => "20x20", :alt => "Archive Transactions"), 
+      archive_transactions_list_account_path(account) %></td>
+  <% else %>
+    <td class="icon">&nbsp</td>
+  <% end %>
+  <% if account.histories.find(:all).size > 0 %>
+    <td class="icon"><%= link_to image_tag("/images/view_archive.ico", :border => "0", :size => "20x20", :alt => "View Archived Transactions"), 
+      view_archived_transactions_account_path(account) %></td>
+    <td class="icon"><%= link_to image_tag("/images/purge.gif", :border => "0", :size => "20x20", :alt => "Purge Archived Transactions"), 
+      purge_archived_transactions_account_path(account) %></td>
+  <% else %>
+    <td class="icon">&nbsp</td>
+    <td class="icon">&nbsp</td>
+  <% end %>
+</tr>

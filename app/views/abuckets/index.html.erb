@@ -1,0 +1,39 @@
+<div id="main">
+  <div id="tab2">
+
+    <br/>
+    <%= link_to image_tag("/images/back.gif", :border => "0", :size => "30x30", :alt => "Back to Account List"), 
+      user_accounts_path(current_user) %>&nbsp
+    <%= link_to image_tag("/images/new.gif", :border => "0", :size => "30x30", :alt => "New Buckets"), 
+      new_account_abucket_path(@account) %>&nbsp
+    <%= render :partial => '/helppages/help_button_link' %>
+
+    <div class="body">
+      
+      <h3>Account: <span class="head1"><%=h @account.name %></span></h3>
+      <h2>Bucket List</h2>
+
+      <% if @abuckets.count > 0 %>
+        <div class="list1" style="width:480px">
+          <table class="list" border="1" cellpadding="3">
+            <tr class="header">
+              <th class="name">Bucket Name</th>
+              <th class="currency">Balance</th>
+              <th width="80px">Action</th>
+            </tr>
+          </table>
+        </div>
+        <div class="list1" style="width:480px">
+          <table class="list" border="1" cellpadding="3">
+            <%= render :partial => 'bucket', :collection => @abuckets %>
+          </table>
+        </div>
+        <br />
+      <% else %>
+        <p>No buckets have been set up yet.</p>
+      <% end %>
+
+    </div>
+  
+  </div>
+</div>

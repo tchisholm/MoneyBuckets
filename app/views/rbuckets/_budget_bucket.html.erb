@@ -1,0 +1,9 @@
+<tr class="<%= cycle('list-line-odd', 'list-line-even') %>">
+  <td class="name"><%=h @account.abuckets.find(budget_bucket.abucket_id).name %></td>
+  <% remaining = @recurring.remaining_amount(@account,budget_bucket.abucket_id) %>
+  <% if remaining != 0 %>
+    <td class="currency"><%=h number_to_currency(remaining) %></td>
+  <% else %>
+    <td class="currency">&nbsp</td>
+  <% end %>
+</tr>

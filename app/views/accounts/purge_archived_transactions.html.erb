@@ -1,0 +1,40 @@
+<div id="main">
+
+  <br/>
+  <%= link_to image_tag("/images/back.gif", :border => "0", :size => "30x30", :alt => "Back to Account List"), 
+    user_accounts_path(current_user) %>
+  <%= render :partial => '/helppages/help_button_link' %>
+
+  <div class="body">
+    
+    <h3>Account: <span class="head1"><%=h @account.name %></span></h3>
+    <h2>Purge Archived Transactions</h2>
+
+    <% if @history.size > 0 %>
+      <% form_tag(purge_transactions_account_path) do %>
+        <%= submit_tag "Purge Checked Transactions" %>
+        <br /><br/>
+        <div>
+          <table class="list" border="1" cellpadding="3">
+            <tr class="header" style="vertical-align:bottom">
+              <th class="date">Date</th>
+              <th class="type">#</th>
+              <th class="name">Description</th>
+              <th class="currency">Withdrawal</th>
+              <th class="currency">Deposit</th>
+              <th class="date">Purge?</th>
+            </tr>
+            <%= render :partial => 'history_transaction', :collection => @history %>
+          </table>
+        </div>
+        <br />
+        <% if @history.size > 11 %>
+          <%= submit_tag "Purge Checked Transactions" %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <p>No archived transactions exist.</p>
+    <% end %>
+
+  </div>
+</div>

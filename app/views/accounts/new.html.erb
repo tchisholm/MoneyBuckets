@@ -1,0 +1,34 @@
+<div id="main">
+  <div id="tab1">
+
+    <br/>
+    <%= link_to image_tag("/images/back.gif", :border => "0", :size => "30x30", :alt => "Back to Account List"), 
+      user_accounts_path(current_user) %>&nbsp
+    <%= render :partial => '/helppages/help_button_link' %>
+
+    <div class="body">
+      
+      <h2>New Account</h2>
+
+      <%= error_messages_for :account %>
+
+      <fieldset>
+
+        <% form_for([current_user, @account]) do |f| %>
+          <p>
+            <b>Account Name:</b><br />
+            <%= f.text_field :name, :size => 40 %>
+          </p>
+          <p>
+            <%= f.submit 'Create' %>
+          </p>
+        <% end %>
+        
+        <script language="JavaScript"> document.forms[0].account_name.focus(); </script>
+      
+      </fieldset>
+
+    </div>
+  
+  </div>
+</div>

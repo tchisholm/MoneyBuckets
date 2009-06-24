@@ -1,0 +1,57 @@
+<div id="main">
+  <div id="tab4">
+
+    <br/>
+    <%= link_to image_tag("/images/back.gif", :border => "0", :size => "30x30", :alt => "Back to Transaction List"), 
+      account_transactions_path(@account) %>&nbsp
+    <% if !@transaction.reconciled %>
+      <%= link_to image_tag("/images/delete2.gif", :border => "0", :size => "30x30", :alt => "Delete Transaction"), 
+        [@account, @transaction], :confirm => 'Are you sure you want to delete this transaction?', :method => :delete %>&nbsp
+    <% end %>
+    <%= render :partial => '/helppages/help_button_link' %>
+
+    <div class="body">
+      
+      <h3>Account: <span class="head1"><%=h @account.name %></span></h3>
+      <h2>Edit Transaction</h2>
+
+      <%= error_messages_for :transaction %>
+
+      <fieldset>
+
+        <% form_for([@account, @transaction]) do |f| %>
+          <p>
+            <b>Date:</b><br />
+            <%= f.date_select :tran_date, :order => [:month, :day, :year] %>
+          </p>
+          <p>
+            <b>Document#:</b><br />
+            <%= f.text_field :doc_number, :size => 10 %>
+          </p>
+          <p>
+            <b>Description:</b><br />
+            <%= f.text_field :description, :size => 40 %>
+          </p>
+          <% if !@transaction.reconciled %>
+            <p>
+              <b>Withdrawal Amount:</b><br />
+              <%= f.text_field :wamount, :size => 12 %>
+            </p>
+            <p>
+              <b>Deposit Amount:</b><br />
+              <%= f.text_field :damount, :size => 12 %>
+            </p>
+          <% end %>
+          <p>
+            <%= f.submit 'Update' %>
+          </p>
+        <% end %>
+        
+        <script language="JavaScript"> document.forms[0].transaction_description.focus(); </script>
+      
+      </fieldset>
+
+    </div>
+  
+  </div>
+</div>

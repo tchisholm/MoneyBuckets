@@ -1,0 +1,51 @@
+<% if transaction.description != 'Balance Forward' %>
+  <tr class="<%= cycle('list-line-odd', 'list-line-even') %>">
+    <td class="date"><%=h transaction.tran_date.strftime("%m-%d-%Y") %></td>
+    <% if transaction.doc_number != nil and transaction.doc_number != '' %>
+      <td class="type"><%=h transaction.doc_number %></td>
+    <% else %>
+      <td class="type">&nbsp</td>
+    <% end %>
+    <td class="name"><%=h transaction.description %></td>
+    <% remaining = 0 %>
+    <% if transaction.wamount != 0 and transaction.wamount != nil %>
+      <td class="currency"><%= number_to_currency(transaction.wamount) %></td>
+      <% remaining = transaction.wamount - transaction.sum_allocation_buckets('Withdrawal') %>
+    <% else %>
+      <td class="currency">&nbsp</th>
+    <% end %>
+    <% if transaction.damount != 0 and transaction.damount != nil %>
+      <td class="currency"><%= number_to_currency(transaction.damount) %></td>
+      <% remaining = transaction.damount - transaction.sum_allocation_buckets('Deposit') %>
+    <% else %>
+      <td class="currency">&nbsp</td>
+    <% end %>
+    <% if remaining != 0 %>
+      <td class="currency"><%= number_to_currency(remaining) %></td>
+    <% else %>
+      <td class="currency">&nbsp</td>
+    <% end %>
+    <% if transaction.reconciled %>
+      <td class="icon"><%= link_to image_tag("/images/check.png", :border => "0", :size => "15x15", :alt => "Unreconcile"), 
+        unreconcile_transaction_path(transaction) %></td>
+    <% else %>
+      <td class="icon">&nbsp</td>
+    <% end %>
+    <td class="icon"><%= link_to image_tag("/images/edit.gif", :border => "0", :size => "20x20", :alt => "Edit"), 
+      edit_account_transaction_path(@account, transaction) %></td>
+    <% if !transaction.reconciled %>
+      <td class="icon"><%= link_to image_tag("/images/delete.gif", :border => "0", :size => "20x20", :alt => "Delete"), 
+        [@account, transaction], :confirm => 'Are you sure you want to delete this transaction?', :method => :delete %></td>
+    <% else %>
+      <td class="icon">&nbsp</td>
+    <% end %>
+    <td class="icon"><%= link_to image_tag("/images/bucket.gif", :border => "0", :size => "20x20", :alt => "Bucket Allocation"), 
+      transaction_tbuckets_path(transaction) %></td>
+    <% if !transaction.reconciled and remaining == 0 %>
+      <td class="icon"><%= link_to image_tag("/images/check.png", :border => "0", :size => "15x15", :alt => "Reconcile"), 
+        reconcile_transaction_path(transaction) %></td>
+    <% else %>
+      <td class="icon">&nbsp</td>
+    <% end %>
+  </tr>
+<% end %>

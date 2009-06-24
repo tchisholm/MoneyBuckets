@@ -1,0 +1,32 @@
+<div id="main">
+
+  <br/>
+  <%= link_to image_tag("/images/back.gif", :border => "0", :size => "30x30", :alt => "Back to Account List"), 
+    user_accounts_path(current_user) %>
+
+  <div class="body">
+    
+    <h3>Account: <span class="head1"><%=h @account.name %></span></h3>
+    <h2>Transaction Detail Report</h2>
+
+    <% if @account.transactions.count > 1 %>
+      <div>
+        <table class="list" border="1" cellpadding="3">
+          <tr class="header" style="vertical-align:bottom">
+            <th class="date">Date</th>
+            <th class="type">#</th>
+            <th class="name">Description</th>
+            <th class="currency">Withdrawal</th>
+            <th class="currency">Deposit</th>
+            <th class="icon"><img src="/images/check_head.png" width="15" height="15"></th>
+            <th class="currency">Balance</th>
+          </tr>
+          <%= render :partial => 'transaction', :collection => @account.transactions.find(:all) %>
+        </table>
+      </div>
+    <% else %>
+      <p>No transactions have been entered yet.</p>
+    <% end %>
+
+  </div>
+</div>

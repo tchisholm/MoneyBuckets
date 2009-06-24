@@ -1,0 +1,61 @@
+<div id="main">
+  <div id="tab5">
+
+    <br/>
+    <%= link_to image_tag("/images/back.gif", :border => "0", :size => "30x30", :alt => "Back to Recurring Transaction List"), 
+      account_recurrings_path(@account) %>&nbsp
+    <% if @recurring.find_ubuckets(@abuckets).size > 0 %>
+      <%= link_to image_tag("/images/new.gif", :border => "0", :size => "30x30", :alt => "New Recurring Transaction Bucket"), 
+        new_recurring_rbucket_path(@recurring) %>&nbsp
+    <% end %>
+    <%= render :partial => '/helppages/help_button_link' %>
+
+    <div class="body">
+      
+      <h3>&nbsp&nbsp Account: <span class="head1"><%=h @account.name %></span><br/>
+            Recurring: <span class="head2"><%=h @recurring.name %></span></h3>
+      <h2>Recurring Transaction Bucket List</h2>
+
+      <% if @recurring.transaction_type == "Deposit" and @recurring.monthly == true %>
+        <div style="width:683px;color:gold;padding-bottom:3px">
+      <% else %>
+        <div style="width:443px;color:gold;padding-bottom:3px">
+      <% end %>
+        Remaining: <%= number_to_currency(@recurring.amount - @recurring.sum_allocation_buckets) %> 
+      </div>
+      
+      <% if @rbuckets.count > 0 %>
+        <% if @recurring.transaction_type == "Deposit" and @recurring.monthly == true %>
+          <div class="list2" style="width:701px">
+        <% else %>
+          <div class="list2" style="width:461px">
+        <% end %>
+          <table class="list" border="1" cellpadding="3">
+            <tr class="header">
+              <th class="name">Bucket Name</th>
+              <th class="currency">Amount</th>
+              <% if @recurring.transaction_type == "Deposit" and @recurring.monthly == true %>
+                <th class="currency">Budget</th>
+                <th class="currency">Remaining</th>
+              <% end %>
+              <th colspan="2" width="50px">Action</th>
+            </tr>
+          </table>
+        </div>
+        <% if @recurring.transaction_type == "Deposit" and @recurring.monthly == true %>
+          <div class="list2" style="width:701px">
+        <% else %>
+          <div class="list2" style="width:461px">
+        <% end %>
+          <table class="list" border="1" cellpadding="3">
+            <%= render :partial => 'rbucket', :collection => @rbuckets %>
+          </table>
+        </div>
+      <% else %>
+        <p>No allocations buckets have been set up yet.</p>
+      <% end %>
+
+    </div>
+  
+  </div>
+</div>

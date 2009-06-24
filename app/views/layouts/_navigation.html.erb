@@ -1,0 +1,35 @@
+<div id="navigation">
+  <% if logged_in? %>
+    <div style="background-color:#AC0">
+      <%= link_to "Accounts", user_accounts_path(current_user) %>
+    </div>
+    <div style="background-color:#9B0">
+      <%= link_to "Buckets", user_buckets_path(current_user) %>
+    </div>
+    <div style="background-color:#8A0">
+      <%= link_to "User", userinfo_path %>
+    </div>
+    <div style="background-color:#790">
+      <%= link_to "Logout", logout_path %>
+    </div>
+    <div style="background-color:#680">
+      <% if current_user.admin %>
+        <%= link_to "Help", edit_helppage_path("General Instructions") %>
+      <% else %>
+        <%= link_to "Help", helppage_path("General Instructions") %>
+      <% end %>
+    </div>
+    <br/><br/>
+  <% else %>
+    <div style="background-color:#AC0">&nbsp</div>
+    <div style="background-color:#9B0">&nbsp</div>
+    <div style="background-color:#8A0">
+      <%= link_to "Sign Up", signup_path %>
+    </div>
+    <div style="background-color:#790">
+      <%= link_to "Login", login_path %>
+    </div>
+    <div style="background-color:#680">&nbsp</div>
+    <br/><br/>
+  <% end %>
+</div>

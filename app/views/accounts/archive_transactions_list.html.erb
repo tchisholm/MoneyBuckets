@@ -1,0 +1,41 @@
+<div id="main">
+
+  <br/>
+  <%= link_to image_tag("/images/back.gif", :border => "0", :size => "30x30", :alt => "Back to Account List"), 
+    user_accounts_path(current_user) %>
+    <%= render :partial => '/helppages/help_button_link' %>
+
+  <div class="body">
+    
+    <h3>Account: <span class="head1"><%=h @account.name %></span></h3>
+    <h2>Archive Transactions</h2>
+
+    <% archive_transactions = @account.transactions.find_all_by_reconciled(true) %>
+    <% if archive_transactions.size > 0 %>
+      <% form_tag(archive_transactions_account_path) do %>
+        <%= submit_tag "Archive Checked Transactions" %>
+        <br /><br/>
+        <div>
+          <table class="list" border="1" cellpadding="3">
+            <tr class="header" style="vertical-align:bottom">
+              <th class="date">Date</th>
+              <th class="type">#</th>
+              <th class="name">Description</th>
+              <th class="currency">Withdrawal</th>
+              <th class="currency">Deposit</th>
+              <th class="date">Archive?</th>
+            </tr>
+            <%= render :partial => 'archive_transaction', :collection => archive_transactions %>
+          </table>
+        </div>
+        <br />
+        <% if archive_transactions.size > 11 %>
+          <%= submit_tag "Archive Checked Transactions" %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <p>No transactions are eligable for archive.</p>
+    <% end %>
+
+  </div>
+</div>

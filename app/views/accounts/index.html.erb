@@ -1,0 +1,36 @@
+<div id="main">
+  <div id="tab1">
+    
+    <br/>
+    <%= link_to image_tag("/images/new.gif", :border => "0", :size => "30x30", :alt => "New Account"), 
+      new_user_account_path(current_user) %>&nbsp
+    <%= render :partial => '/helppages/help_button_link' %>
+    
+    <div class="body">
+      
+      <h2>Account List</h2>
+
+      <% if current_user.accounts.count > 0 %>
+        <div class="list" style="width:690px">
+          <table class="list" border="1" cellpadding="3">
+            <tr class="header">
+              <th class="name">Account Name</th>
+              <th class="currency">Balance</th>
+              <th width="290px">Action</th>
+           </tr>
+          </table>
+        </div>
+        <div class="list" style="width:690px">
+          <table class="list" border="1" cellpadding="3">
+            <%= render :partial => 'account', :collection => @accounts %>
+          </table>
+        </div>
+        <br />
+      <% else %>
+        <p>No accounts have been set up yet.</p>
+      <% end %>
+
+    </div>
+  
+  </div>
+</div>

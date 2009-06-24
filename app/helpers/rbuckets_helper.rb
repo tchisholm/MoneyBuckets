@@ -1,0 +1,2 @@
+module RbucketsHelper
+end

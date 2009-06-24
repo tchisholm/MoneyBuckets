@@ -1,0 +1,56 @@
+<div id="main">
+  <div id="tab4">
+
+    <br/>
+    <%= link_to image_tag("/images/back.gif", :border => "0", :size => "30x30", :alt => "Back to Transaction List"), 
+      account_transactions_path(@account) %>&nbsp
+    <%= render :partial => '/helppages/help_button_link' %>
+
+    <div class="body">
+      
+      <h3>Account: <span class="head1"><%=h @account.name %></span></h3>
+      <h2>New Transaction</h2>
+
+      <%= error_messages_for :transaction %>
+
+      <fieldset>
+
+        <% form_for([@account, @transaction]) do |f| %>
+          <p>
+            <b>Date:</b><br />
+            <%= f.date_select :tran_date, :order => [:month, :day, :year] %>
+          </p>
+          <p>
+            <b>Recurring Transaction:</b><br />
+            <%= f.select :recur_id, @recurrings.map {|u| [u.name, u.id] }, :prompt => '' %>
+          </p>
+          <p style="color:red">-- OR --</p>
+          <p>
+            <b>Document#:</b><br />
+            <%= f.text_field :doc_number, :size => 10 %>
+          </p>
+          <p>
+            <b>Description:</b><br />
+            <%= f.text_field :description, :size => 40 %>
+          </p>
+          <p>
+            <b>Withdrawal Amount:</b><br />
+            <%= f.text_field :wamount, :size => 12 %>
+          </p>
+          <p>
+            <b>Deposit Amount:</b><br />
+            <%= f.text_field :damount, :size => 12 %>
+          </p>
+          <p>
+            <%= f.submit 'Create' %>
+          </p>
+        <% end %>
+        
+        <script language="JavaScript"> document.forms[0].transaction_recur_id.focus(); </script>
+      
+      </fieldset>
+
+    </div>
+  
+  </div>
+</div>

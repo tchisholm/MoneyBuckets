@@ -1,0 +1,46 @@
+<div id="main">
+
+  <br/>
+  <%= link_to image_tag("/images/back.gif", :border => "0", :size => "30x30", :alt => "Back to Account List"), 
+    user_accounts_path(current_user) %>
+
+  <div class="body">
+    
+    <h3>Account: <span class="head1"><%=h @account.name %></span></h3>
+    <h2>Budget Report</h2>
+
+    <% if @bbuckets.size > 0 %>
+      <div>
+        <table class="list" border="1" cellpadding="3">
+          <tr class="header" style="vertical-align:bottom">
+            <th class="name">Bucket Name</th>
+            <th class="currency">Monthly Budget</th>
+            <% for deposit in @deposits %>
+              <% if deposit.monthly %>
+                <th class="currency"><%=h deposit.name %></th>
+              <% else %>
+                <th class="currency" style="color:silver"><%=h deposit.name %></th>
+              <% end %>
+            <% end %>
+          </tr>
+          <tr style="color:black;background-color:gold">
+            <th class="name">Net:</th>
+            <th class="currency"><%=h number_to_currency(@budget.amount) %></th>
+            <% for deposit in @deposits %>
+              <% if deposit.monthly %>
+                <th class="currency"><%=h number_to_currency(deposit.amount) %></th>
+              <% else %>
+                <th class="currency" style="color:gray"><%=h number_to_currency(deposit.amount) %></th>
+              <% end %>
+            <% end %>
+          </tr>
+          <%= render :partial => 'bucket', :collection => @bbuckets %>
+        </table>
+      </div>
+    <% else %>
+      <p>No budget buckets have been set up yet.</p>
+    <% end %>
+
+  </div>
+
+</div>
